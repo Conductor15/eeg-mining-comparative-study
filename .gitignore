@@ -1,0 +1,49 @@
+# ==========================================
+# PYTHON CACHE VÀ MÔI TRƯỜNG
+# ==========================================
+# Bỏ qua các thư mục __pycache__ (bạn đang có ở root và trong src/)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Bỏ qua môi trường ảo (nếu sau này bạn tạo)
+venv/
+env/
+.venv/
+
+# ==========================================
+# THƯ MỤC DỮ LIỆU (DATA)
+# Tránh đẩy file .edf, .tsv, .pkl khổng lồ lên Git
+# ==========================================
+data/raw/*
+data/processed/*
+
+# (Tùy chọn) Giữ lại cấu trúc thư mục rỗng trên Git
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# ==========================================
+# OUTPUTS VÀ BÁO CÁO (REPORTS)
+# Bỏ qua các file sinh ra tự động từ code
+# ==========================================
+# Bỏ qua ảnh biểu đồ
+reports/figures/*
+# Bỏ qua file logs text
+reports/logs/*
+# Bỏ qua file trọng số mô hình (.keras, .h5, v.v.)
+reports/models/*
+# Bỏ qua các file CSV trích xuất (như EEG_features_kmeans.csv)
+reports/*.csv
+
+# (Tùy chọn) Giữ lại cấu trúc thư mục rỗng của reports
+!reports/figures/.gitkeep
+!reports/logs/.gitkeep
+!reports/models/.gitkeep
+
+# ==========================================
+# IDE VÀ HỆ ĐIỀU HÀNH
+# ==========================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -76,7 +76,6 @@ def extract_features(epoch, fs):
         return None
     
     return {
-        "mean": np.mean(epoch), "std": std_val, "var": np.var(epoch),
         "min": np.min(epoch), "max": np.max(epoch), "range": np.ptp(epoch),
         "skew": skew_val, "kurt": kurt_val,
         "bp_delta": bp_delta, "bp_theta": bp_theta,

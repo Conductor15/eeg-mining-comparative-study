@@ -63,19 +63,25 @@ def train_random_forest(X, y, log_dir="reports/logs", fig_dir="reports/figures")
     os.makedirs(log_dir, exist_ok=True)
     os.makedirs(fig_dir, exist_ok=True)
 
-    # SUBJECT-WISE SPLIT
-    print("\nĐang chia tập dữ liệu theo bệnh nhân độc lập (Subject-wise Split)...")
-    gss = GroupShuffleSplit(n_splits=1, test_size=0.25, random_state=42)
+    print("\nĐang chia tập dữ liệu theo bệnh nhân độc lập (Train: 70%, Val: 15%, Test: 15%)...")
     
-    train_idx, test_idx = next(gss.split(X, y, groups=X['subject_id']))
+    gss1 = GroupShuffleSplit(n_splits=1, test_size=0.3, random_state=42)
+    train_idx, temp_idx = next(gss1.split(X, y, groups=X['subject_id']))
     
     X_train_full = X.iloc[train_idx]
-    X_test_full  = X.iloc[test_idx]
     y_train = y.iloc[train_idx]
-    y_test  = y.iloc[test_idx]
     
-    print(f"  Số bệnh nhân tập Train: {X_train_full['subject_id'].nunique()} -> {X_train_full['subject_id'].unique()}")
-    print(f"  Số bệnh nhân tập Test:  {X_test_full['subject_id'].nunique()} -> {X_test_full['subject_id'].unique()}")
+    X_temp_full = X.iloc[temp_idx]
+    y_temp = y.iloc[temp_idx]
+    
+    gss2 = GroupShuffleSplit(n_splits=1, test_size=0.5, random_state=42)
+    val_idx, test_idx = next(gss2.split(X_temp_full, y_temp, groups=X_temp_full['subject_id']))
+
+    X_test_full = X_temp_full.iloc[test_idx]
+    y_test  = y_temp.iloc[test_idx]
+    
+    print(f"  Số bệnh nhân tập Train (70%): {X_train_full['subject_id'].nunique()} -> {X_train_full['subject_id'].unique()}")
+    print(f"  Số bệnh nhân tập Test (15%):  {X_test_full['subject_id'].nunique()} -> {X_test_full['subject_id'].unique()}")
     
     X_train = X_train_full.drop(columns=['subject_id'])
     X_test  = X_test_full.drop(columns=['subject_id'])
